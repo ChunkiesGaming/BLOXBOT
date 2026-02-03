@@ -72,14 +72,14 @@ router.get('/roblox/callback', async (req, res) => {
 			{ expiresIn: '7d' }
 		);
 		
-		// Redirect to frontend with token
-		const frontendUrl = process.env.CORS_ORIGIN || 'http://localhost:3001';
-		res.redirect(`${frontendUrl}/auth/callback?token=${token}`);
+		// Redirect to frontend with token (encode token so URL is safe)
+		const frontendUrl = (process.env.CORS_ORIGIN || 'http://localhost:3000').replace(/\/$/, '');
+		res.redirect(`${frontendUrl}/auth/callback?token=${encodeURIComponent(token)}`);
 		
 	} catch (error) {
 		console.error('OAuth error:', error);
-		const frontendUrl = process.env.CORS_ORIGIN || 'http://localhost:3001';
-		res.redirect(`${frontendUrl}/auth/error?message=${encodeURIComponent(error.message)}`);
+		const frontendUrl = (process.env.CORS_ORIGIN || 'http://localhost:3000').replace(/\/$/, '');
+		res.redirect(`${frontendUrl}/auth/callback?error=${encodeURIComponent(error.message || 'OAuth failed')}`);
 	}
 });
 

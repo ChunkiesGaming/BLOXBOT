@@ -7,9 +7,9 @@ local Players = game:GetService("Players")
 
 local QuestService = {}
 
--- Configuration
-local API_URL = os.getenv("BACKEND_API_URL") or "http://localhost:3000/api/v1/events"
-local API_KEY = os.getenv("ROBLOX_API_KEY") or "YOUR_SERVER_SECRET_KEY"
+-- Configuration (set these to match your backend; os.getenv does not work in Roblox)
+local API_URL = "https://YOUR_BACKEND_URL/api/v1/events"
+local API_KEY = "YOUR_SERVER_SECRET_KEY"
 
 -- In-memory session tracking
 local sessions = {}

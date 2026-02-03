@@ -67,7 +67,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Backend runs on `http://localhost:3000`
+Backend runs on `http://localhost:4000`
 
 ### 3. Web App Setup
 
@@ -79,7 +79,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Web app runs on `http://localhost:3001`
+Web app runs on `http://localhost:3000`
 
 ### 4. Roblox Setup
 
@@ -92,7 +92,7 @@ Web app runs on `http://localhost:3001`
 
 ### Backend Environment Variables
 
-- `PORT`: Server port (default: 3000)
+- `PORT`: Server port (default: 4000)
 - `DATABASE_URL`: PostgreSQL connection string
 - `JWT_SECRET`: Secret for JWT tokens
 - `ROBLOX_API_KEY`: Secret key for Roblox server authentication

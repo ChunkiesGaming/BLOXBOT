@@ -1,46 +1,64 @@
 'use client'
 
-import React, { useEffect, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 
-function AuthCallbackContent() {
+export default function AuthCallback() {
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const token = searchParams.get('token')
-    const error = searchParams.get('error')
+    setMounted(true)
+  }, [])
 
-    if (error) {
-      alert('Authentication error: ' + error)
-      router.push('/login')
-      return
-    }
+  useEffect(() => {
+    if (!mounted || typeof window === 'undefined') return
 
-    if (token) {
-      Cookies.set('auth_token', token, { expires: 7 })
-      router.push('/')
-    } else {
-      router.push('/login')
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const token = params.get('token')
+      const error = params.get('error') ?? params.get('message')
+
+      if (error) {
+        setStatus('error')
+        const msg = decodeURIComponent(error)
+        try {
+          alert('Authentication error: ' + msg)
+        } catch {
+          console.error('Auth error:', msg)
+        }
+        router.replace('/')
+        return
+      }
+
+      if (token) {
+        try {
+          Cookies.set('auth_token', token, { expires: 7, sameSite: 'lax' })
+        } catch (e) {
+          console.error('Cookie set failed:', e)
+        }
+        setStatus('ok')
+        router.replace('/')
+      } else {
+        setStatus('error')
+        router.replace('/')
+      }
+    } catch (e) {
+      setStatus('error')
+      console.error('Auth callback error:', e)
+      router.replace('/')
     }
-  }, [searchParams, router])
+  }, [mounted, router])
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="text-xl">Completing login...</div>
-    </div>
-  )
-}
-
-export default function AuthCallback() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Loading...</div>
+      <div className="text-xl">
+        {status === 'loading' && 'Completing login...'}
+        {status === 'ok' && 'Redirecting...'}
+        {status === 'error' && 'Redirecting to app...'}
       </div>
-    }>
-      <AuthCallbackContent />
-    </Suspense>
+    </div>
   )
 }

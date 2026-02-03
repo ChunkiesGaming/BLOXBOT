@@ -33,7 +33,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Backend will run on `http://localhost:3000`
+Backend will run on `http://localhost:4000`
 
 ### 3. Web App Setup
 
@@ -44,12 +44,12 @@ npm install
 # Copy and edit environment file
 cp .env.example .env
 # Edit .env:
-# - NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1
+# - NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
 
 npm run dev
 ```
 
-Web app will run on `http://localhost:3001`
+Web app will run on `http://localhost:3000`
 
 ### 4. Roblox Integration
 
@@ -57,7 +57,7 @@ Web app will run on `http://localhost:3001`
 2. In `ServerScriptService`, create a folder called `QuestLayer`
 3. Copy all files from `roblox/` into this folder
 4. Edit `QuestService.lua`:
-   - Set `API_URL` to your backend URL (e.g., `http://localhost:3000/api/v1/events`)
+   - Set `API_URL` to your backend URL (e.g., `http://localhost:4000/api/v1/events`)
    - Set `API_KEY` to match your `ROBLOX_API_KEY` from backend `.env`
 5. Publish your game
 
@@ -92,7 +92,7 @@ curl -X POST http://localhost:3000/api/v1/events \
 
 ### Test Web App
 
-1. Navigate to `http://localhost:3001`
+1. Navigate to `http://localhost:3000`
 2. Click "Login with Roblox" (requires OAuth setup)
 3. View quests and points
 
@@ -134,7 +134,7 @@ If you want to use Roblox OAuth for web login:
 ### Backend won't start
 - Check database connection
 - Verify all environment variables are set
-- Check port 3000 is not in use
+- Check port 4000 is not in use
 
 ### Roblox events not working
 - Verify API key matches in both places

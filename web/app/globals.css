@@ -1,6 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Custom palette from previous tailwind.config.js */
+  --color-primary: #14F195;
+  --color-secondary: #9945FF;
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
